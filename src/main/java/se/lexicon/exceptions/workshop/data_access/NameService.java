@@ -1,10 +1,12 @@
 package se.lexicon.exceptions.workshop.data_access;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
+import se.lexicon.exceptions.workshop.exceptions.DuplicateNameException;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
 
 public class NameService {
@@ -61,9 +63,14 @@ public class NameService {
 	     * DuplicateNameException.
 	     * @param name
 	     */
-	    public void addFemaleFirstName(String name){
+	    public void addFemaleFirstName(String name) throws DuplicateNameException {
+			if (femaleFirstNames.contains(name)) {
+				throw new DuplicateNameException("femaleFirstNames contains name");
+			}
+
 	    	femaleFirstNames.add(name);
 	    	CSVReader_Writer.saveFemaleNames(femaleFirstNames);
+			throw new RuntimeException();
 	    		
 	    }
 
@@ -73,10 +80,15 @@ public class NameService {
 	     * DuplicateNameException.
 	     * @param name
 	     */
-	    public void addMaleFirstName(String name){
-	    	maleFirstNames.add(name);
-	        CSVReader_Writer.saveMaleNames(maleFirstNames);
-	    }
+	    public void addMaleFirstName(String name )  throws DuplicateNameException{
+			if (maleFirstNames.contains(name))
+				throw new DuplicateNameException("maleFirstNames contains name");
+
+
+			maleFirstNames.add(name);
+			CSVReader_Writer.saveMaleNames(maleFirstNames);
+			throw  new RuntimeException();
+		}
 
 	    /**
 	     * Here you need to check if List<String> lastNames already contains the name
@@ -84,9 +96,14 @@ public class NameService {
 	     * DuplicateNameException.
 	     * @param lastName
 	     */
-	    public void addLastName(String lastName){
+	    public void addLastName(String lastName) throws DuplicateNameException{
+		 if(lastNames.contains(lastNames))
+
+			 throw new DuplicateNameException("lastNames contains");
+
 	    	lastNames.add(lastName);
 	        CSVReader_Writer.saveLastNames(lastNames);
+			throw new RuntimeException() ;
 	    }
 
 
